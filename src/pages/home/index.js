@@ -1,9 +1,8 @@
 /**
- *
+ * 首页
  */
 import React, { Component } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 import { Carousel } from '@ant-design/react-native';
 import ItemSeparator from './ItemSeparator';
 import ListItem from './ListItem';
@@ -68,13 +67,11 @@ const carouselData = [
 ];
 
 class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
+  static navigationOptions = {
+    headerTitle: 'Home',
+  };
 
-    this.onItemPress = this.onItemPress.bind(this);
-  }
-
-  onItemPress() {
+  onItemPress = () => {
     this.props.navigation.navigate({
       routeName: 'Details',
       params: {},
@@ -87,7 +84,7 @@ class HomeScreen extends Component {
   // FlatList及父组件的flex: 1是必须的，否则将不能滚动
   render() {
     return (
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
         <Carousel
           autoplay
           infinite
@@ -114,7 +111,7 @@ class HomeScreen extends Component {
           }
         </Carousel>
         <FlatList
-          style={{...styles.list, flex: 1}}
+          style={{ ...styles.list, flex: 1 }}
           keyExtractor={this._keyExtractor}
           data={listData}
           renderItem={

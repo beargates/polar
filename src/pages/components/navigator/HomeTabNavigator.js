@@ -6,54 +6,10 @@ import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 // You can import Ionicons from @expo/vector-icons if you use Expo or
 // react-native-vector-icons/Ionicons otherwise.
-import withSafeArea from '../container/SafeArea'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import HomeScreenStack from './StackNavigator';
+import HomeScreen from '../../home';
 import SettingsScreen from '../../settings';
-// import TabBar from './TabBar';
-
-// const addStackNavigator = StackNavigator({
-//   Add: {
-//     screen: NewsNewScreen,
-//     navigationOptions: () => ({
-//       title: '新建',
-//     }),
-//   }
-// }, {
-//   mode: 'modal',
-// });
-//
-// const routeConfigs = {
-//   Home: {
-//     screen: HomeStackNavigator,
-//     path: 'tabs/:name', // path属性适用于其他app或浏览器使用url打开本app并进入指定页面
-//   },
-//   Add: {
-//     screen: addStackNavigator,
-//     navigationOptions: () => ({
-//       tabBarLabel: () => <Icon name="edit" size={40} color="#0c89cf"/>
-//     })
-//   },
-//   Setting: {
-//     screen: SettingStackNavigator,
-//   },
-// };
-// const tabNavigatorConfig = {
-//   // 自定义tabBar
-//   // tabBarComponent: TabBar,
-//   tabBarOptions: {
-//     // activeTintColor: '#e91e63',
-//     labelStyle: {
-//       fontSize: 18,
-//       lineHeight: 48,
-//       justifyContent: 'center',
-//     },
-//     style: {
-//       // backgroundColor: 'blue',
-//       // justifyContent: 'center',
-//     },
-//   }
-// };
+import withSafeArea from "../container/SafeArea";
 
 class IconWithBadge extends React.Component {
   render() {
@@ -90,11 +46,27 @@ const HomeIconWithBadge = (props) => {
 
 export default createBottomTabNavigator(
   {
-    Home: HomeScreenStack,
-    Settings: withSafeArea(SettingsScreen),
+    Home: {
+      screen: withSafeArea(HomeScreen),
+      navigationOptions: () => ({
+        // 设置tabBar title的三种方法 tabBarLabel优先生效，其次是title
+        title: <Text>阅读</Text>, // title还有一个作用是设置StackNavigator里navigation的title
+        tabBarLabel: () => <Text>News</Text>,
+      }),
+    },
+    Settings: {
+      screen: withSafeArea(SettingsScreen),
+    },
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
         let IconComponent = Ionicons;

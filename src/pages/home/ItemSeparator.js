@@ -2,10 +2,10 @@
  *
  */
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 function ItemSeparator() {
-  return <View style={styles.container} />
+  return <View style={styles.container}/>
 }
 
 const styles = StyleSheet.create({

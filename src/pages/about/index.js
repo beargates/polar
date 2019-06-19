@@ -1,15 +1,19 @@
 /**
  * 关于页面
  */
-import React, {Component} from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 class About extends Component {
+  static navigationOptions = {
+    headerTitle: '关于'
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>React Native Demo</Text>
-        <Text style={styles.ver}>v 0.0.1</Text>
+        <Text style={styles.ver}>v0.0.1</Text>
       </View>
     )
   }

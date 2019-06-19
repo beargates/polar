@@ -1,9 +1,9 @@
 /**
  *
  */
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {colors} from '../../common/variables';
+import React, { Component } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { colors } from '../../common/variables';
 
 class ListItem extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class ListItem extends Component {
   }
 
   render() {
-    const {title, userName, createTime} = this.props.item.item;
+    const { title, userName, createTime } = this.props.item.item;
 
     return (
       <TouchableOpacity style={styles.container} onPress={this.onPress}>

@@ -4,14 +4,14 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 import AppContainer from './pages/components/container/AppContainer';
 
 export default class App extends Component {
   render() {
     return (
-      <AppContainer />
+      <AppContainer/>
     );
   }
 }

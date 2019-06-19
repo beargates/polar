@@ -1,20 +1,17 @@
 /**
  *
  */
-import React, {Component} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
-import {List} from '@ant-design/react-native';
+import React, { Component } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import { List } from '@ant-design/react-native';
 
-const {Item} = List;
+const { Item } = List;
 
 class SettingScreen extends Component {
-  constructor() {
-    super();
-
-    this.toAbout = this.toAbout.bind(this);
-  }
-
-  toAbout() {
+  static navigationOptions = {
+    headerTitle: 'Home',
+  };
+  toAbout = () => {
     this.props.navigation.navigate('About'); // eslint-disable-line react/prop-types
   }
 
@@ -31,7 +28,6 @@ class SettingScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
   }
 });
 

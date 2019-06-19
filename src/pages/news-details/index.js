@@ -1,13 +1,14 @@
 /**
- *
+ * 详情页
  */
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {colors} from '../../common/variables';
+import React, { Component } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { colors } from '../../common/variables';
 
 class NewsDetails extends Component {
   static navigationOptions = {
-    headerTitle: '详情'
+    headerTitle: '详情',
+    title: '详情'
   }
 
   render() {

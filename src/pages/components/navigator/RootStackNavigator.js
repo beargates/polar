@@ -1,13 +1,13 @@
 import React from "react";
 import { createStackNavigator } from "react-navigation";
 import withSafeArea from "../container/SafeArea";
-import HomeScreen from './HomeTabNavigator';
+import DrawerScreen from './DrawerNavigator';
 import DetailsScreen from '../../news-details';
 import AboutScreen from '../../about';
 
 export default createStackNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: DrawerScreen,
     navigationOptions: {
       header: null
     }

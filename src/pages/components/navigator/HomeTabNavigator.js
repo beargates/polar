@@ -48,11 +48,6 @@ export default createBottomTabNavigator(
   {
     Home: {
       screen: withSafeArea(HomeScreen),
-      navigationOptions: () => ({
-        // 设置tabBar title的三种方法 tabBarLabel优先生效，其次是title
-        title: <Text>阅读</Text>, // title还有一个作用是设置StackNavigator里navigation的title
-        tabBarLabel: () => <Text>News</Text>,
-      }),
     },
     Settings: {
       screen: withSafeArea(SettingsScreen),

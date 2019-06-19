@@ -1,7 +1,7 @@
 /**
  * StackNavigator
  */
-import {StackNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation';
 import HomeScreen from '../../home';
 import NewsDetails from '../../news-details';
 
@@ -21,4 +21,4 @@ const routeConfig = {
 };
 const navigationOptions = {};
 
-export default StackNavigator(routeConfig, navigationOptions);
+export default createStackNavigator(routeConfig, navigationOptions);

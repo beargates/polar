@@ -76,7 +76,7 @@ class HomeScreen extends Component {
 
   onItemPress() {
     this.props.navigation.navigate({
-      routeName: 'NewsDetails',
+      routeName: 'Details',
       params: {},
     });
   }

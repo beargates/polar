@@ -1,7 +1,7 @@
 /**
  * StackNavigator
  */
-import {StackNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation';
 import AboutScreen from '../../about';
 import SettingScreen from '../../settings';
 
@@ -19,4 +19,4 @@ const routeConfig = {
 };
 const navigationOptions = {};
 
-export default StackNavigator(routeConfig, navigationOptions);
+export default createStackNavigator(routeConfig, navigationOptions);

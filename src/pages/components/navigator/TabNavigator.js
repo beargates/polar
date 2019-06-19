@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from 'react-navigation';
 // react-native-vector-icons/Ionicons otherwise.
 import withSafeArea from '../container/SafeArea'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import HomeScreen from '../../home';
+import HomeScreenStack from './StackNavigator';
 import SettingsScreen from '../../settings';
 // import TabBar from './TabBar';
 
@@ -90,7 +90,7 @@ const HomeIconWithBadge = (props) => {
 
 export default createBottomTabNavigator(
   {
-    Home: withSafeArea(HomeScreen),
+    Home: HomeScreenStack,
     Settings: withSafeArea(SettingsScreen),
   },
   {

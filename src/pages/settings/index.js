@@ -12,7 +12,11 @@ class SettingScreen extends Component {
     headerTitle: 'Home',
   };
   toAbout = () => {
-    this.props.navigation.navigate('About'); // eslint-disable-line react/prop-types
+    this.props.navigation.navigate('About');
+  }
+
+  takePhoto = () => {
+    this.props.navigation.push('CameraView');
   }
 
   render() {
@@ -21,6 +25,7 @@ class SettingScreen extends Component {
         <List>
           <Item>隐私</Item>
           <Item arrow="horizontal" onClick={this.toAbout}>关于</Item>
+          <Item arrow="horizontal" onClick={this.takePhoto}>上传头像</Item>
         </List>
       </ScrollView>)
   }

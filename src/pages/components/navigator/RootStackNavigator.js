@@ -4,6 +4,7 @@ import withSafeArea from "../container/SafeArea";
 import DrawerScreen from './DrawerNavigator';
 import DetailsScreen from '../../news-details';
 import AboutScreen from '../../about';
+import { Camera } from '../camera'
 
 export default createStackNavigator({
   Home: {
@@ -17,6 +18,9 @@ export default createStackNavigator({
   },
   About: {
     screen: withSafeArea(AboutScreen)
+  },
+  CameraView: {
+    screen: Camera
   }
 }, {
   // headerMode: 'none',

@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  userName: Object.assign({}, detailsStyle),
-  time: Object.assign({}, detailsStyle),
+  userName: detailsStyle,
+  time: detailsStyle,
 });
 
 export default ListItem;

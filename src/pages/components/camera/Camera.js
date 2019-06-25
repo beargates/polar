@@ -11,7 +11,9 @@
  */
 import React from 'react';
 import {
+  CameraRoll,
   Dimensions,
+  Image,
   SafeAreaView,
   Slider,
   StyleSheet,
@@ -137,7 +139,8 @@ export default class CameraScreen extends React.Component {
   takePicture = async () => {
     if (this.camera) {
       const data = await this.camera.takePictureAsync();
-      console.warn('takePicture ', data);
+      this.setState({ photoData: data });
+      CameraRoll.saveToCameraRoll(data.uri, 'photo');
     }
   };
 
@@ -150,7 +153,7 @@ export default class CameraScreen extends React.Component {
           this.setState({ isRecording: true });
           const data = await promise;
           this.setState({ isRecording: false });
-          console.warn('takeVideo', data);
+          CameraRoll.saveToCameraRoll(data.uri, 'video');
         }
       } catch (e) {
         console.error(e);
@@ -288,9 +291,9 @@ export default class CameraScreen extends React.Component {
       left: this.state.autoFocusPoint.drawRectPosition.x - 32,
     };
     return <SafeAreaView
-      style={{
-        flex: 1, justifyContent: 'space-between'
-      }}
+      style={[StyleSheet.absoluteFill, {
+        justifyContent: 'space-between'
+      }]}
     >
       <View style={StyleSheet.absoluteFill}>
         <View style={[styles.autoFocusBox, drawFocusRingPosition]}/>
@@ -325,79 +328,61 @@ export default class CameraScreen extends React.Component {
         </TouchableOpacity>
       </View>
       <View>
-        <View
-          style={{
-            height: 20,
-            backgroundColor: 'transparent',
-            flexDirection: 'row',
-            alignSelf: 'flex-end',
-          }}
-        >
-          <Slider
-            style={{ width: 150, marginTop: 15, alignSelf: 'flex-end' }}
+        {
+          this.state.autoFocus === 'on' ? null : <Slider
+            style={{ width: 150, alignSelf: 'flex-end' }}
             onValueChange={this.setFocusDepth}
             step={0.1}
             disabled={this.state.autoFocus === 'on'}
           />
-        </View>
+        }
+        {this.state.zoom !== 0 && (
+          <Text style={[styles.flipText, styles.zoomText]}>Zoom: {this.state.zoom}</Text>
+        )}
         <View
           style={{
-            height: 56,
-            backgroundColor: 'transparent',
             flexDirection: 'row',
             alignSelf: 'flex-end',
           }}
         >
+          {/*缩放*/}
+          {/*<TouchableOpacity*/}
+          {/*style={[styles.flipButton, { flex: 0.1, alignSelf: 'flex-end' }]}*/}
+          {/*onPress={this.zoomIn}*/}
+          {/*>*/}
+          {/*<Text style={styles.flipText}> + </Text>*/}
+          {/*</TouchableOpacity>*/}
+          {/*<TouchableOpacity*/}
+          {/*style={[styles.flipButton, { flex: 0.1, alignSelf: 'flex-end' }]}*/}
+          {/*onPress={this.zoomOut}*/}
+          {/*>*/}
+          {/*<Text style={styles.flipText}> - </Text>*/}
+          {/*</TouchableOpacity>*/}
+
+          {/*自动对焦*/}
+          {/*<TouchableOpacity*/}
+          {/*style={[styles.flipButton, { flex: 0.25, alignSelf: 'flex-end' }]}*/}
+          {/*onPress={this.toggleFocus}*/}
+          {/*>*/}
+          {/*<Text style={styles.flipText}> AF : {this.state.autoFocus} </Text>*/}
+          {/*</TouchableOpacity>*/}
           <TouchableOpacity
             style={[
               styles.flipButton,
               {
                 flex: 0.3,
-                alignSelf: 'flex-end',
                 backgroundColor: this.state.isRecording ? 'white' : 'darkred',
               },
             ]}
             onPress={this.state.isRecording ? () => {
             } : this.takeVideo}
           >
-            {this.state.isRecording ? (
-              <Text style={styles.flipText}> ☕ </Text>
-            ) : (
-              <Text style={styles.flipText}> REC </Text>
-            )}
-          </TouchableOpacity>
-        </View>
-        {this.state.zoom !== 0 && (
-          <Text style={[styles.flipText, styles.zoomText]}>Zoom: {this.state.zoom}</Text>
-        )}
-        <View
-          style={{
-            height: 56,
-            backgroundColor: 'transparent',
-            flexDirection: 'row',
-            alignSelf: 'flex-end',
-          }}
-        >
-          <TouchableOpacity
-            style={[styles.flipButton, { flex: 0.1, alignSelf: 'flex-end' }]}
-            onPress={this.zoomIn}
-          >
-            <Text style={styles.flipText}> + </Text>
+            <Text style={styles.flipText}>
+              {this.state.isRecording ? '☕' : 'REC'}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.flipButton, { flex: 0.1, alignSelf: 'flex-end' }]}
-            onPress={this.zoomOut}
-          >
-            <Text style={styles.flipText}> - </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.flipButton, { flex: 0.25, alignSelf: 'flex-end' }]}
-            onPress={this.toggleFocus}
-          >
-            <Text style={styles.flipText}> AF : {this.state.autoFocus} </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.flipButton, styles.picButton, { flex: 0.3, alignSelf: 'flex-end' }]}
+            style={[styles.flipButton, styles.picButton, { flex: 0.3 }]}
             onPress={this.takePicture}
           >
             <Text style={styles.flipText}> SNAP </Text>
@@ -418,7 +403,7 @@ export default class CameraScreen extends React.Component {
         ref={ref => {
           this.camera = ref;
         }}
-        style={{ flex: 1 }}
+        style={{ position: 'absolute', top: 120, right: 0, bottom: 100, left: 0 }}
         type={this.state.type}
         flashMode={this.state.flash}
         autoFocus={this.state.autoFocus}
@@ -437,15 +422,26 @@ export default class CameraScreen extends React.Component {
         onFacesDetected={canDetectFaces ? this.facesDetected : null}
         onTextRecognized={canDetectText ? this.textRecognized : null}
         onGoogleVisionBarcodesDetected={canDetectBarcode ? this.barcodeRecognized : null}
-      >
-        {this.renderPanel()}
-      </RNCamera>
+      />
     );
   }
 
   render() {
+    const clientWidth = Dimensions.get('window').width;
+    const { width, height } = this.state.photoData || {};
     return <View style={styles.container}>
       {this.renderCamera()}
+      {this.renderPanel()}
+      {/* 预览 */}
+      {
+        this.state.photoData && false ?
+          <View>
+            <Image
+              style={{ width: clientWidth, height: clientWidth / width * height }}
+              source={this.state.photoData}
+            />
+          </View> : null
+      }
     </View>;
   }
 }
